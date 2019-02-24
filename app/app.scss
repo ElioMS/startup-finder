@@ -1,0 +1,16 @@
+// NativeScript core theme
+// @see https://docs.nativescript.org/ui/theme
+@import '~nativescript-theme-core/scss/blue';
+
+// Override variables here
+
+@import '~nativescript-theme-core/scss/index';
+
+@import 'fonts/fontawesome-webfont.ttf';
+
+.fa {
+  font-family: FontAwesome, fontawesome-webfont;
+}
+
+// Global SCSS styling
+// @see https://docs.nativescript.org/ui/styling
