@@ -1,5 +1,6 @@
 import Vue from 'nativescript-vue'
 import App from './components/App'
+import Login from './components/Login'
 
 Vue.config.silent = (TNS_ENV === 'production');
 

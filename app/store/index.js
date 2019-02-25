@@ -6,7 +6,8 @@ import axios from 'axios';
 Vue.use(Vuex);
 
 const state = {
-    entities: []
+    entities: [],
+    byQuerySearch : []
 };
 
 const actions = {
@@ -28,6 +29,9 @@ const mutations = {
     SET_FAVORITE: (state, payload) => {
         let selected = state.entities.find( x => x.gsx$nombre.$t === payload.name);
         selected.favorite = !selected.favorite;
+    },
+    SET_SEARCH: (state, payload) => {
+        state.entities = state.entities.filter(x => x.gsx$nombre.$t.toLowerCase().indexOf(payload.query.toLowerCase()) > -1);
     }
 };
 

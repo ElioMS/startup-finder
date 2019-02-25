@@ -17,7 +17,8 @@
             <SearchBar :visibility="isItemVisible ? 'visible' : 'collapsed'"
                        style="padding-bottom: 20px;" hint="Buscar Startup"
                        v-model="searchQuery"
-                       @submit="onTextChanged"/>
+                       @submit="onTextChanged"
+                        @clear="loadData"/>
 
             <ListView class="list-group" for="entity in data" @itemTap="goToDetail"
                       style="height:1250px; padding-top: 20">
@@ -91,7 +92,10 @@
                 this.isItemVisible = !this.isItemVisible
             },
             onTextChanged(args) {
-                alert(args.object.text)
+                this.$store.commit('SET_SEARCH', {query: args.object.text });
+            },
+            loadData() {
+                this.$store.dispatch('LOAD_ENTITIES');
             }
         }
     }
