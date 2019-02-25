@@ -17,6 +17,7 @@
     "@vue/devtools": "^5.0.0-beta.3",
     "axios": "^0.18.0",
     "nativescript-fonticon": "^2.0.0",
+    "nativescript-radiobutton": "^0.1.0",
     "nativescript-socket.io": "^0.9.0",
     "nativescript-theme-core": "^1.0.4",
     "nativescript-toast": "^2.0.0",
@@ -24,7 +25,7 @@
     "nativescript-vue-devtools": "^1.1.0",
     "tns-core-modules": "^5.0.2",
     "vue-router": "^3.0.2",
-    "vuex": "^3.0.1"
+    "vuex": "^3.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

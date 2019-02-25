@@ -1,20 +1,23 @@
 <template>
     <Page class="page">
+        <!--<ActivityIndicator busy="true" @busyChange="onBusyChanged" />-->
         <ActionBar class="action-bar">
-            <ActionItem @tap="onTapSearch"
-                        ios.systemIcon="9" ios.position="left"
-                        android.systemIcon="ic_menu_search" android.position="actionBar" />
 
-            <StackLayout >
-                <Label class="action-bar-title" text="StartUp Finder"  :visibility="isItemVisible ? 'collapsed' : 'visible'" />
-                <SearchBar :visibility="isItemVisible ? 'visible' : 'collapsed'"
-                            style="padding-bottom: 20px; color: white"  hint="Buscar Startup"
-                           v-model="searchQuery"
-                           @submit="onTextChanged"/>
-            </StackLayout>
+            <ActionItem android.systemIcon="ic_menu_edit" android.position="left" @tap="showFilters"/>
+            <NavigationButton android.systemIcon="ic_menu_edit" android.position="left" @tap="goToFavorites"/>
+            <ActionItem @tap="onTapSearch" android.systemIcon="ic_menu_search" android.position="right" />
+            <!--<StackLayout >-->
+                <Label class="action-bar-title" text="StartUp Finder" />
+                <!--<Label class="action-bar-title" text="StartUp Finder"  :visibility="isItemVisible ? 'collapsed' : 'visible'" />-->
+            <!--</StackLayout>-->
         </ActionBar>
 
         <StackLayout>
+
+            <SearchBar :visibility="isItemVisible ? 'visible' : 'collapsed'"
+                       style="padding-bottom: 20px;" hint="Buscar Startup"
+                       v-model="searchQuery"
+                       @submit="onTextChanged"/>
 
             <ListView class="list-group" for="entity in data" @itemTap="goToDetail"
                       style="height:1250px; padding-top: 20">
@@ -24,7 +27,7 @@
 
                         <StackLayout style="width: 60%">
                             <Label class="block" :text="entity.gsx$nombre.$t"  textWrap="true"   />
-                            <Label class="inline" :text="'Sector: '+entity.gsx$industria.$t"  textWrap="true" />
+                            <Label class="inline" :text="'Industria: '+entity.gsx$industria.$t"  textWrap="true" />
                             <Label class="inline" :text="'Ubicación: '+entity.gsx$país.$t"  textWrap="true" />
                         </StackLayout>
                             <!--<FormattedString>-->
@@ -44,31 +47,28 @@
 
 <script>
     import Detail from "./Detail";
-    import axios from "axios";
+    import Favorites from "./Favorites"
+    import Filters from "./Filters"
 
     export default {
         data() {
             return {
                 isItemVisible: false,
-                search: '',
-                data: [],
-                entities: [
-                    { name: 'Entity 1' , country: 'Peru', sector: 'Minero', favorite: true},
-                    { name: 'Entity 2' , country: 'Peru', sector: 'Minero', favorite: true},
-                    { name: 'Entity 3' , country: 'Peru', sector: 'Minero', favorite: false},
-                    { name: 'Entity 4' , country: 'Peru', sector: 'Minero', favorite: false},
-                    { name: 'Entity 5' , country: 'Peru', sector: 'Minero', favorite: false},
-                    { name: 'Entity 6' , country: 'Peru', sector: 'Minero', favorite: true},
-                ]
+                searchQuery: '',
+                // data: []
+            }
+        },
+        computed: {
+            data() {
+                return this.$store.getters.GET_ENTITIES;
             }
         },
         mounted() {
-            axios.get('https://spreadsheets.google.com/feeds/list/1s8yMnY-Ks6SG-agOWSpd5wnlZyXdENWW2xZ3ABCowho/1/public/values?alt=json')
-                .then(response => {
-                    this.data = response.data.feed.entry;
-
-                    console.log(this.data)
-                })
+            this.$store.dispatch('LOAD_ENTITIES');
+            // axios.get('https://spreadsheets.google.com/feeds/list/1s8yMnY-Ks6SG-agOWSpd5wnlZyXdENWW2xZ3ABCowho/1/public/values?alt=json')
+            //     .then(response => {
+            //         this.data = response.data.feed.entry;
+            //     });
         },
         methods: {
             goToDetail: function(args) {
@@ -78,8 +78,14 @@
                     }
                 })
             },
+            showFilters() {
+                this.$showModal(Filters)
+            },
+            goToFavorites () {
+                this.$navigateTo(Favorites);
+            },
             addToFavorites (args) {
-                alert(args.name)
+                this.$store.commit('SET_FAVORITE', {name: args.gsx$nombre.$t});
             },
             onTapSearch() {
                 this.isItemVisible = !this.isItemVisible
@@ -91,7 +97,7 @@
     }
 </script>
 
-<style scoped>
+<style>
     ActionBar {
         /*background-color: #0f95ba;*/
         color: #ffffff;
