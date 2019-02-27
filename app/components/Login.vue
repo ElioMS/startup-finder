@@ -4,12 +4,12 @@
             <Label class="login-title" horizontalAlignment="center" height="100" text="Bienvenido a StartUp Finder" textWrap="true"></Label>
 
             <StackLayout class="input-field">
-                <TextField hint="Ingresar usuario" autocorrect="false" class="input input-border"></TextField>
+                <TextField hint="Ingresar email" autocorrect="false" class="input input-border" v-model="form.email"></TextField>
                 <Label class="h3 text-center" text="Username"></Label>
             </StackLayout>
 
             <StackLayout class="input-field">
-                <TextField hint="Ingresar contraseña" autocorrect="false" class="input input-border"></TextField>
+                <TextField hint="Ingresar contraseña" autocorrect="false" class="input input-border" v-model="form.password"></TextField>
                 <Label class="h3 text-center" text="Password"></Label>
             </StackLayout>
 
@@ -20,17 +20,38 @@
 
 <script>
     import Home from './App'
+    import axios from 'axios'
 
     export default {
         name: "Login",
         data() {
             return {
-                errors: []
+                errors: [],
+                form: {
+                    email: 'elio@mail.com',
+                    password: '123123'
+                }
             }
         },
         methods: {
             login() {
-                this.$navigateTo(Home)
+                // axios.post('https://lacalera.pappstest.com/api/v1/login',{
+                axios.post('https://lacalera.pappstest.com/api/v1/login',{
+                    document_number: "77208443",
+                    password: "123123"
+                },
+                    {
+                        headers: { "Content-Type": "application/json" }
+                    })
+                    .then((response) => {
+                        console.log(response.status);
+                        if (response.status === 200) {
+                            this.$navigateTo(Home)
+                        }
+                    }).catch((err)=>{
+                        console.log(err)
+                    })
+
             }
         }
     }
