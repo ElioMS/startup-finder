@@ -7,7 +7,11 @@ Vue.use(Vuex);
 
 const state = {
     entities: [],
-    byQuerySearch : []
+    filteredEntities: [],
+    filters: {
+        country: '',
+        sector: ''
+    }
 };
 
 const actions = {
@@ -32,6 +36,26 @@ const mutations = {
     },
     SET_SEARCH: (state, payload) => {
         state.entities = state.entities.filter(x => x.gsx$nombre.$t.toLowerCase().indexOf(payload.query.toLowerCase()) > -1);
+    },
+    SET_FILTERS: (state, payload) => {
+        state.filteredEntities = state.entities.filter( x => {
+                if (state.filters.sector !== '' && state.filters.country !== '') {
+                    return x.gsx$industria.$t.toLowerCase() === state.filters.sector.toLowerCase() && x.gsx$país.$t.toLowerCase() === payload.country.toLowerCase()
+                }
+
+                if (state.filters.sector === '' && state.filters.country !== '') {
+                    return x.gsx$país.$t.toLowerCase() === payload.country.toLowerCase()
+                }
+
+                if (state.filters.sector !== '' && state.filters.country === '') {
+                    return x.gsx$industria.$t.toLowerCase() === state.filters.sector.toLowerCase()
+                }
+            }
+        )
+    },
+    SET_FILTER_VALUE: (state, payload) => {
+        state.filters.country = payload.country;
+        state.filters.sector = payload.sector;
     }
 };
 
@@ -41,6 +65,9 @@ const getters = {
     },
     GET_FAVORITES: state => {
         return state.entities.filter(x => x.favorite === true);
+    },
+    GET_FILTERED: state => {
+        return state.filteredEntities;
     }
 };
 

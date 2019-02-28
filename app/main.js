@@ -1,21 +1,16 @@
 import Vue from 'nativescript-vue'
 import App from './components/App'
 import Login from './components/Login'
-
-import axios from 'axios'
-import VueAxios from 'vue-axios'
-
-Vue.use(VueAxios, axios)
+import store from './store';
 
 Vue.config.silent = (TNS_ENV === 'production');
-// Vue.prototype.$axios = axios;
-import VueDevtools from 'nativescript-vue-devtools'
-Vue.use(VueDevtools, {
-    host: "192.168.1.2"
-})
+/// Importar RadioButton
+Vue.registerElement('CheckBox', ()=> require('nativescript-checkbox').CheckBox);
+// Importar SideDrawer
+Vue.registerElement('RadSideDrawer', () => require('nativescript-ui-sidedrawer').RadSideDrawer);
+// Vue.use(RadSideDrawer)
+// Importar FontAwesome Icons
 import {TNSFontIcon, fonticon} from 'nativescript-fonticon';
-
-import store from './store';
 
 TNSFontIcon.debug = true;
 TNSFontIcon.paths = {
@@ -27,5 +22,5 @@ Vue.filter('fonticon', fonticon);
 
 new Vue({
     store,
-    render: h => h('frame', [h(Login)])
+    render: h => h('frame', [h(App)])
 }).$start();

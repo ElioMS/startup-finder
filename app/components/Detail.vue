@@ -8,7 +8,7 @@
         <StackLayout style="margin: 0 20px 0 20px;">
             <FlexboxLayout flexWrap="wrap">
                 <Label width="60%" alignSelf="center" :text="this.entity.gsx$nombre.$t" class="entity-title"  />
-                <Label  alignSelf="center" class="fa" :text="'fa-star' | fonticon" />
+                <Label  alignSelf="center" class="fa" :class="{favorite: entity.favorite}" :text="'fa-star' | fonticon" />
             </FlexboxLayout>
                 <Label :text="'Industria: '+this.entity.gsx$industria.$t" height="20"/>
                 <Label :text="'Tipo de solución: '+this.entity.gsx$tipodesolución.$t" height="20"/>
@@ -16,7 +16,7 @@
                 <Label :text="'Fecha de contacto: '+this.entity.gsx$fechadecontacto.$t" height="20"/>
                 <Label :visibility="this.entity.gsx$universidadincubadora.$t ? 'visible' : 'collapsed'" :text="'Universidad incubadora: '+this.entity.gsx$universidadincubadora.$t" height="20"/>
 
-            <Button class="btn btn-primary btn-rounded-lg " text="Descubre más" @tap="goToWebPage" />
+            <Button class="btn btn-primary btn-rounded-lg" text="Descubre más" @tap="goToWebPage" />
         </StackLayout>
     </Page>
 

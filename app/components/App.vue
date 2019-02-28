@@ -3,46 +3,55 @@
         <!--<ActivityIndicator busy="true" @busyChange="onBusyChanged" />-->
         <ActionBar class="action-bar">
 
-            <ActionItem android.systemIcon="ic_menu_edit" android.position="left" @tap="showFilters"/>
-            <NavigationButton android.systemIcon="ic_menu_edit" android.position="left" @tap="goToFavorites"/>
+            <!--<ActionItem android.systemIcon="ic_menu_edit" android.position="left" @tap="showFilters"/>-->
+            <NavigationButton android.systemIcon="ic_menu_btn_add" android.position="left" @tap="toggleDrawer"/>
+            <!--<NavigationButton android.systemIcon="ic_menu_edit" android.position="left" @tap="goToFavorites"/>-->
             <ActionItem @tap="onTapSearch" android.systemIcon="ic_menu_search" android.position="right" />
             <!--<StackLayout >-->
-                <Label class="action-bar-title" text="StartUp Finder" />
-                <!--<Label class="action-bar-title" text="StartUp Finder"  :visibility="isItemVisible ? 'collapsed' : 'visible'" />-->
+            <Label class="action-bar-title" text="StartUp Finder" />
+            <!--<Label class="action-bar-title" text="StartUp Finder"  :visibility="isItemVisible ? 'collapsed' : 'visible'" />-->
             <!--</StackLayout>-->
         </ActionBar>
 
-        <StackLayout>
+        <RadSideDrawer ref="drawer"  drawerLocation="Left" :showOverNavigation="true" gesturesEnabled="true">
+            <StackLayout ~drawerContent backgroundColor="#ffffff">>
+                <StackLayout >
+                    <Label class="drawer-header" text="Menú"></Label>
 
-            <SearchBar :visibility="isItemVisible ? 'visible' : 'collapsed'"
-                       style="padding-bottom: 20px;" hint="Buscar Startup"
-                       v-model="searchQuery"
-                       @submit="onTextChanged"
-                        @clear="loadData"/>
+                    <Label text="Mis Favoritos" class="drawer-item" @tap="goToFavorites"></Label>
+                    <Label text="Filtros" class="drawer-item" @tap="showFilters"></Label>
+                    <Label text="Close Drawer" class="drawer-close-button" padding="10" style="horizontal-align: center" @tap="onCloseDrawerTap"></Label>
+                </StackLayout>
 
-            <ListView class="list-group" for="entity in data" @itemTap="goToDetail"
-                      style="height:1250px; padding-top: 20">
-                <v-template>
-                    <FlexboxLayout flexDirection="row" class="list-group-item">
-                        <Image src="~/assets/images/brain.png" class="thumb img-circle" />
+            </StackLayout>
+            <StackLayout ~mainContent>
 
-                        <StackLayout style="width: 60%">
-                            <Label class="block" :text="entity.gsx$nombre.$t"  textWrap="true"   />
-                            <Label class="inline" :text="'Industria: '+entity.gsx$industria.$t"  textWrap="true" />
-                            <Label class="inline" :text="'Ubicación: '+entity.gsx$país.$t"  textWrap="true" />
-                        </StackLayout>
-                            <!--<FormattedString>-->
-                                <!--<Span class="block"  />-->
-                                <!--<StackLayout class="hr-light m-10"></StackLayout>-->
-                                <!--<Span style="display: block;" :text="entity.gsx$industria.$t" />-->
-                                <!--<Span style="display: block;" :text="entity.gsx$país.$t" />-->
-                            <!--</FormattedString>-->
+                <SearchBar :visibility="isItemVisible ? 'visible' : 'collapsed'"
+                           style="padding-bottom: 20px;" hint="Buscar Startup"
+                           v-model="searchQuery"
+                           @submit="onTextChanged"
+                           @clear="loadData"/>
 
-                        <Label class="fa" :class="{favorite: entity.favorite}" :text="'fa-star' | fonticon" @tap="addToFavorites(entity)" />
-                    </FlexboxLayout>
-                </v-template>
-            </ListView>
-        </StackLayout>
+                <ListView class="list-group" for="entity in data" @itemTap="goToDetail"
+                          style="height:1250px; padding-top: 20">
+                    <v-template>
+                        <FlexboxLayout flexDirection="row" class="list-group-item">
+                            <Image src="~/assets/images/brain.png" class="thumb img-circle" />
+
+                            <StackLayout style="width: 60%">
+                                <Label class="block" :text="entity.gsx$nombre.$t"  textWrap="true"   />
+                                <Label class="inline" :text="'Industria: '+entity.gsx$industria.$t"  textWrap="true" />
+                                <Label class="inline" :text="'Ubicación: '+entity.gsx$país.$t"  textWrap="true" />
+                            </StackLayout>
+
+                            <Label class="fa" :class="{favorite: entity.favorite}" :text="'fa-star' | fonticon" @tap="addToFavorites(entity)" />
+                        </FlexboxLayout>
+                    </v-template>
+                </ListView>
+            </StackLayout>
+        </RadSideDrawer>
+
+
     </Page>
 </template>
 
@@ -72,6 +81,15 @@
             //     });
         },
         methods: {
+            openDrawer() {
+                this.$refs.drawer.nativeView.showDrawer();
+            },
+            onCloseDrawerTap() {
+                this.$refs.drawer.nativeView.closeDrawer();
+            },
+            toggleDrawer() {
+                this.$refs.drawer.nativeView.toggleDrawerState();
+            },
             goToDetail: function(args) {
                 this.$navigateTo(Detail, {
                     props: {
@@ -123,4 +141,25 @@
         color: #ffd341;
     }
 
+    .drawer-header {
+        padding: 16 16 16 16;
+        /*margin-bottom: 16;*/
+        background-color: #333333;
+        color: #ffffff;
+        font-size: 24;
+    }
+
+    .drawer-item {
+        padding: 8 16;
+        color: #333333;
+        /*background-color: white;*/
+        font-size: 16;
+    }
+
+    .drawer-close-button {
+        margin-top: 20;
+        padding: 10 10 10 10;
+        /*background-color: #53ba82;*/
+        color: #333;
+    }
 </style>
