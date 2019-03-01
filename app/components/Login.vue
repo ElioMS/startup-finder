@@ -37,8 +37,8 @@
             login() {
                 // axios.post('https://lacalera.pappstest.com/api/v1/login',{
                 axios.post('https://lacalera.pappstest.com/api/v1/login',{
-                    document_number: "77208443",
-                    password: "123123"
+                    document_number: this.form.email,
+                    password: this.form.password
                 },
                     {
                         headers: { "Content-Type": "application/json" }
@@ -49,7 +49,11 @@
                             this.$navigateTo(Home)
                         }
                     }).catch((err)=>{
-                        console.log(err)
+                        alert({
+                            title: "Ops!",
+                            message: "Credenciales incorrectas",
+                            okButtonText: "Volver"
+                        })
                     })
 
             }

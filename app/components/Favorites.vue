@@ -16,7 +16,7 @@
                             <Label class="inline" :text="'Ubicación: '+entity.gsx$país.$t"  textWrap="true" />
                         </StackLayout>
 
-                        <Label class="fa favorite" :text="'fa-star' | fonticon" @tap="addToFavorites(entity)" />
+                        <Label class="fa favorite" :text="'fa-star' | fonticon" @tap="addNewFavorite(entity)" />
                     </FlexboxLayout>
                 </v-template>
             </ListView>
@@ -25,32 +25,19 @@
 </template>
 
 <script>
-    import Detail from "./Detail";
+    import globals from "../mixins/globals";
 
     export default {
         name: "Favorites",
+        mixins: [ globals ],
         computed: {
             data() {
                 return this.$store.getters.GET_FAVORITES;
-            }
-        },
-        methods: {
-            goToDetail: function(args) {
-                this.$navigateTo(Detail, {
-                    props: {
-                        entity: args.item
-                    }
-                })
-            },
-            addToFavorites (args) {
-                this.$store.commit('SET_FAVORITE', {name: args.gsx$nombre.$t});
             }
         }
     }
 </script>
 
 <style scoped>
-    /*.action-bar {*/
-        /*background-color: indianred;*/
-    /*}*/
+
 </style>

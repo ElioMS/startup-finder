@@ -2,13 +2,13 @@
 
     <Page class="page">
         <ActionBar :title="this.entity.gsx$nombre.$t" class="action-bar">
-            <NavigationButton text="Go back" android.systemIcon="ic_menu_back" @tap="goBack" />
+            <NavigationButton text="Go back" android.systemIcon="ic_menu_back" @tap="navigateBack" />
         </ActionBar>
 
         <StackLayout style="margin: 0 20px 0 20px;">
             <FlexboxLayout flexWrap="wrap">
                 <Label width="60%" alignSelf="center" :text="this.entity.gsx$nombre.$t" class="entity-title"  />
-                <Label  alignSelf="center" class="fa" :class="{favorite: entity.favorite}" :text="'fa-star' | fonticon" />
+                <Label  alignSelf="center" class="fa" @tap="addNewFavorite(entity)" :class="{favorite: entity.favorite}" :text="'fa-star' | fonticon" />
             </FlexboxLayout>
                 <Label :text="'Industria: '+this.entity.gsx$industria.$t" height="20"/>
                 <Label :text="'Tipo de solución: '+this.entity.gsx$tipodesolución.$t" height="20"/>
@@ -24,9 +24,11 @@
 
 <script>
     import * as utils from "utils/utils";
+    import globals from "../mixins/globals";
 
     export default {
         name: "Detail",
+        mixins: [ globals ],
         props: {
             entity: {
                 type: Object,
@@ -34,9 +36,6 @@
             }
         },
         methods: {
-            goBack() {
-                this.$navigateBack()
-            },
             goToWebPage() {
                 utils.openUrl(this.entity.gsx$páginaweb.$t)
             }

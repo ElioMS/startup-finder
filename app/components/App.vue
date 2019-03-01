@@ -57,10 +57,13 @@
 
 <script>
     import Detail from "./Detail";
+
     import Favorites from "./Favorites"
     import Filters from "./Filters"
 
     export default {
+        name: 'App',
+        // mixins: [ globals ],
         data() {
             return {
                 isItemVisible: false,
@@ -75,15 +78,8 @@
         },
         mounted() {
             this.$store.dispatch('LOAD_ENTITIES');
-            // axios.get('https://spreadsheets.google.com/feeds/list/1s8yMnY-Ks6SG-agOWSpd5wnlZyXdENWW2xZ3ABCowho/1/public/values?alt=json')
-            //     .then(response => {
-            //         this.data = response.data.feed.entry;
-            //     });
         },
         methods: {
-            openDrawer() {
-                this.$refs.drawer.nativeView.showDrawer();
-            },
             onCloseDrawerTap() {
                 this.$refs.drawer.nativeView.closeDrawer();
             },
