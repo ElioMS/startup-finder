@@ -35,7 +35,6 @@
         },
         methods: {
             login() {
-                // axios.post('https://lacalera.pappstest.com/api/v1/login',{
                 axios.post('https://lacalera.pappstest.com/api/v1/login',{
                     document_number: this.form.email,
                     password: this.form.password
@@ -44,7 +43,7 @@
                         headers: { "Content-Type": "application/json" }
                     })
                     .then((response) => {
-                        console.log(response.status);
+                        // console.log(response.status);
                         if (response.status === 200) {
                             this.$navigateTo(Home)
                         }
