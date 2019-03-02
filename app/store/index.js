@@ -3,6 +3,8 @@ import Vuex from 'vuex';
 
 import axios from 'axios';
 
+const _ = require('lodash');
+
 Vue.use(Vuex);
 
 const state = {
@@ -68,6 +70,39 @@ const getters = {
     },
     GET_FILTERED: state => {
         return state.filteredEntities;
+    },
+    GET_BY_COUNTRY: state => {
+        const brazil = state.entities.filter(x => x.gsx$país.$t.toLowerCase() === 'brasil').length;
+        const sweeden = state.entities.filter(x => x.gsx$país.$t.toLowerCase() === 'suecia').length;
+        const usa = state.entities.filter(x => x.gsx$país.$t.toLowerCase() === 'estados unidos').length;
+        const peru = state.entities.filter(x => x.gsx$país.$t.toLowerCase() === 'peru').length;
+        const norwen = state.entities.filter(x => x.gsx$país.$t.toLowerCase() === 'noruega').length;
+
+        return {
+            data: [
+                {Country: 'Brasil', Amount: brazil},
+                {Country: 'Suecia', Amount: sweeden},
+                {Country: 'USA', Amount: usa},
+                {Country: 'Perú', Amount: peru},
+                {Country: 'Noruega', Amount: norwen},
+            ]
+        }
+    },
+    GET_BY_SOLUTION: state => {
+        const bi = state.entities.filter(x => x.gsx$tipodesolución.$t.toLowerCase() === 'bi').length;
+        const producto = state.entities.filter(x => x.gsx$tipodesolución.$t.toLowerCase() === 'producto').length;
+        const otros = state.entities.filter(x => x.gsx$tipodesolución.$t.toLowerCase() === 'otros').length;
+        const plataforma = state.entities.filter(x => x.gsx$tipodesolución.$t.toLowerCase() === 'plataforma').length;
+        const iot = state.entities.filter(x => x.gsx$tipodesolución.$t.toLowerCase() === 'iot').length;
+
+        return [
+            { Solution: 'BI', Amount: bi },
+            { Solution: 'Producto', Amount: producto },
+            { Solution: 'Otros', Amount: otros },
+            { Solution: 'Plataforma', Amount: plataforma },
+            { Solution: 'IoT', Amount: iot }
+        ]
+
     }
 };
 

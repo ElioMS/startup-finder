@@ -34,6 +34,9 @@
         computed: {
             data() {
                 return this.$store.getters.GET_FILTERED;
+            },
+            duplicate() {
+                return this.$store.getters.GET_BY_SOLUTION
             }
         }
     }

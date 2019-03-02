@@ -20,6 +20,8 @@
 
                     <Label text="Mis Favoritos" class="drawer-item" @tap="goToFavorites"></Label>
                     <Label text="Filtros" class="drawer-item" @tap="showFilters"></Label>
+                    <Label text="Data Management" class="drawer-item" @tap="goToCharts"></Label>
+                    <Label text="Cerrar sesión" class="drawer-item" @tap="logout"></Label>
                     <Label text="Close Drawer" class="drawer-close-button" padding="10" style="horizontal-align: center" @tap="onCloseDrawerTap"></Label>
                 </StackLayout>
 
@@ -57,18 +59,17 @@
 
 <script>
     import Detail from "./Detail";
-
+    import Charts from "./Charts";
     import Favorites from "./Favorites"
     import Filters from "./Filters"
+    import Login from "./Login";
 
     export default {
         name: 'App',
-        // mixins: [ globals ],
         data() {
             return {
                 isItemVisible: false,
-                searchQuery: '',
-                // data: []
+                searchQuery: ''
             }
         },
         computed: {
@@ -99,6 +100,9 @@
             goToFavorites () {
                 this.$navigateTo(Favorites);
             },
+            goToCharts () {
+                this.$navigateTo(Charts);
+            },
             addToFavorites (args) {
                 this.$store.commit('SET_FAVORITE', {name: args.gsx$nombre.$t});
             },
@@ -110,6 +114,9 @@
             },
             loadData() {
                 this.$store.dispatch('LOAD_ENTITIES');
+            },
+            logout() {
+                this.$navigateTo(Login)
             }
         }
     }

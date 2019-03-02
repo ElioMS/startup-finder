@@ -4,12 +4,12 @@
             <Label class="login-title" horizontalAlignment="center" height="100" text="Bienvenido a StartUp Finder" textWrap="true"></Label>
 
             <StackLayout class="input-field">
-                <TextField hint="Ingresar email" autocorrect="false" class="input input-border" v-model="form.email"></TextField>
+                <TextField hint="Ingresar documento" autocorrect="false"  v-model="form.email"></TextField>
                 <Label class="h3 text-center" text="Username"></Label>
             </StackLayout>
 
             <StackLayout class="input-field">
-                <TextField hint="Ingresar contraseña" autocorrect="false" class="input input-border" v-model="form.password"></TextField>
+                <TextField secure="true" hint="Ingresar contraseña" autocorrect="false"  v-model="form.password"></TextField>
                 <Label class="h3 text-center" text="Password"></Label>
             </StackLayout>
 
@@ -28,8 +28,8 @@
             return {
                 errors: [],
                 form: {
-                    email: 'elio@mail.com',
-                    password: '123123'
+                    email: '',
+                    password: ''
                 }
             }
         },
