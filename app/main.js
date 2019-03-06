@@ -31,5 +31,5 @@ Vue.filter('fonticon', fonticon);
 
 new Vue({
     store,
-    render: h => h('frame', [h(App)])
+    render: h => h('frame', [h(Login)])
 }).$start();

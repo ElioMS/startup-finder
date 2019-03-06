@@ -1,11 +1,11 @@
 <template>
     <Page>
-        <ActionBar title="Mis favoritos" class="action-bar">
+        <ActionBar :title="'Mis favoritos ('+data.length+')'" class="action-bar">
             <NavigationButton text="Go back" android.systemIcon="ic_menu_back" @tap="$navigateBack()" />
         </ActionBar>
         <StackLayout>
             <ListView class="list-group" for="entity in data" @itemTap="goToDetail"
-                      style="height:1250px; padding-top: 20">
+                      style="padding-top: 20">
                 <v-template>
                     <FlexboxLayout flexDirection="row" class="list-group-item">
                         <Image src="~/assets/images/brain.png" class="thumb img-circle" />

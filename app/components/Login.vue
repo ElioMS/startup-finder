@@ -1,16 +1,16 @@
 <template>
-    <Page actionBarHidden="true">
-        <StackLayout style="margin: 20px 10px 0 10px;">
+    <Page actionBarHidden="true" class="page">
+        <StackLayout class="form">
             <Label class="login-title" horizontalAlignment="center" height="100" text="Bienvenido a StartUp Finder" textWrap="true"></Label>
 
             <StackLayout class="input-field">
-                <TextField hint="Ingresar documento" autocorrect="false"  v-model="form.email"></TextField>
-                <Label class="h3 text-center" text="Username"></Label>
+                <TextField hint="Ingresar número de documento" keyboardType="number" autocorrect="false"  v-model="form.email"></TextField>
+                <!--<Label class="h3 text-center" text=""></Label>-->
             </StackLayout>
 
             <StackLayout class="input-field">
-                <TextField secure="true" hint="Ingresar contraseña" autocorrect="false"  v-model="form.password"></TextField>
-                <Label class="h3 text-center" text="Password"></Label>
+                <TextField secure="true" hint="Ingresar contraseña" autocorrect="false" autocapitalizationType="none" v-model="form.password"></TextField>
+                <!--<Label class="h3 text-center" text="Password"></Label>-->
             </StackLayout>
 
             <Button class="btn btn-primary btn-rounded-lg " text="INGRESAR"  @tap="login"/>
@@ -61,8 +61,27 @@
 </script>
 
 <style scoped>
+    .page {
+        align-items: center;
+        flex-direction: column;
+        background-color: beige;
+    }
+
+    .form {
+        margin-left: 30;
+        margin-right: 30;
+        flex-grow: 2;
+        vertical-align: middle;
+    }
+
+    .btn-primary {
+        background-color: indianred;
+        font-weight: bold;
+    }
+
     .login-title {
-        font-size: 20px;
+        text-align: center;
+        font-size: 35px;
         font-weight: bold;
     }
 </style>

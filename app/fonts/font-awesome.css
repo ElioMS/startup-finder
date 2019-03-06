@@ -15,6 +15,7 @@
 }
 .fa-star:before {
   content: "\f005";
+  font-weight: 500;
 }
 .fa-star-o:before {
   content: "\f006";

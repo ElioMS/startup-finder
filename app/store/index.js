@@ -12,7 +12,8 @@ const state = {
     filteredEntities: [],
     filters: {
         country: '',
-        sector: ''
+        sector: '',
+        solution: ''
     }
 };
 
@@ -41,6 +42,10 @@ const mutations = {
     },
     SET_FILTERS: (state, payload) => {
         state.filteredEntities = state.entities.filter( x => {
+                if (state.filters.sector !== '' && state.filters.country !== '' && state.filters.solution !== '') {
+                    return x.gsx$industria.$t.toLowerCase() === state.filters.sector.toLowerCase() && x.gsx$país.$t.toLowerCase() === payload.country.toLowerCase() && x.gsx$tipodesolución.$t.toLowerCase() === state.filters.solution.toLowerCase()
+                }
+
                 if (state.filters.sector !== '' && state.filters.country !== '') {
                     return x.gsx$industria.$t.toLowerCase() === state.filters.sector.toLowerCase() && x.gsx$país.$t.toLowerCase() === payload.country.toLowerCase()
                 }
@@ -58,6 +63,7 @@ const mutations = {
     SET_FILTER_VALUE: (state, payload) => {
         state.filters.country = payload.country;
         state.filters.sector = payload.sector;
+        state.filters.solution = payload.solution;
     }
 };
 

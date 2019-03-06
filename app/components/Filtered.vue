@@ -1,12 +1,14 @@
 <template>
     <Page>
-        <ActionBar title="Filtros" class="action-bar">
+        <ActionBar :title="'Resultados ('+data.length+')'" class="action-bar">
             <NavigationButton text="Go back" android.systemIcon="ic_menu_back" @tap="$navigateBack()" />
         </ActionBar>
 
         <StackLayout>
+            <Label class="not-found" v-if="data.length === 0" text="No se encontraron resultados." textWrap="true"></Label>
+
             <ListView class="list-group" for="entity in data" @itemTap="goToDetail"
-                      style="height:1250px; padding-top: 20">
+                      style="padding-top: 20">
                 <v-template>
                     <FlexboxLayout flexDirection="row" class="list-group-item">
                         <Image src="~/assets/images/brain.png" class="thumb img-circle" />
@@ -21,6 +23,8 @@
                     </FlexboxLayout>
                 </v-template>
             </ListView>
+
+
         </StackLayout>
     </Page>
 </template>
@@ -43,5 +47,9 @@
 </script>
 
 <style scoped>
-
+    .not-found {
+        text-align: center;
+        font-size: 25px;
+        font-weight: bold;
+    }
 </style>

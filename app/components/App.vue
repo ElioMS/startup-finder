@@ -1,5 +1,5 @@
 <template>
-    <Page class="page">
+    <Page  >
         <!--<ActivityIndicator busy="true" @busyChange="onBusyChanged" />-->
         <ActionBar class="action-bar">
 
@@ -13,43 +13,49 @@
             <!--</StackLayout>-->
         </ActionBar>
 
-        <RadSideDrawer ref="drawer"  drawerLocation="Left" :showOverNavigation="true" gesturesEnabled="true">
+        <RadSideDrawer ref="drawer"  drawerLocation="Left">
             <StackLayout ~drawerContent backgroundColor="#ffffff">>
                 <StackLayout >
                     <Label class="drawer-header" text="Menú"></Label>
 
-                    <Label text="Mis Favoritos" class="drawer-item" @tap="goToFavorites"></Label>
-                    <Label text="Filtros" class="drawer-item" @tap="showFilters"></Label>
-                    <Label text="Data Management" class="drawer-item" @tap="goToCharts"></Label>
+                    <Label text="Mis Favoritos" class="drawer-item ripple" backgroundColor="lightgray" @tap="goToFavorites"></Label>
+                    <Label text="Filtros" class="drawer-item ripple" @tap="showFilters"></Label>
+                    <Label text="Gráficos" class="drawer-item ripple" @tap="goToCharts"></Label>
                     <Label text="Cerrar sesión" class="drawer-item" @tap="logout"></Label>
-                    <Label text="Close Drawer" class="drawer-close-button" padding="10" style="horizontal-align: center" @tap="onCloseDrawerTap"></Label>
+                    <Label text="Cerrar" class="drawer-close-button" padding="100" style="horizontal-align: center" @tap="onCloseDrawerTap"></Label>
                 </StackLayout>
 
             </StackLayout>
             <StackLayout ~mainContent>
+                <!--<Frame defaultPage="main-content-page">-->
 
-                <SearchBar :visibility="isItemVisible ? 'visible' : 'collapsed'"
-                           style="padding-bottom: 20px;" hint="Buscar Startup"
-                           v-model="searchQuery"
-                           @submit="onTextChanged"
-                           @clear="loadData"/>
 
-                <ListView class="list-group" for="entity in data" @itemTap="goToDetail"
-                          style="height:1250px; padding-top: 20">
-                    <v-template>
-                        <FlexboxLayout flexDirection="row" class="list-group-item">
-                            <Image src="~/assets/images/brain.png" class="thumb img-circle" />
+                    <SearchBar :visibility="isItemVisible ? 'visible' : 'collapsed'"
+                               style="padding-bottom: 20px;" hint="Buscar Startup"
+                               v-model="searchQuery"
+                               @submit="onTextChanged"
+                               @clear="loadData"/>
 
-                            <StackLayout style="width: 60%">
-                                <Label class="block" :text="entity.gsx$nombre.$t"  textWrap="true"   />
-                                <Label class="inline" :text="'Industria: '+entity.gsx$industria.$t"  textWrap="true" />
-                                <Label class="inline" :text="'Ubicación: '+entity.gsx$país.$t"  textWrap="true" />
-                            </StackLayout>
+                    <ListView class="list-group" for="entity in data" @itemTap="goToDetail"
+                              style="height: 100%; padding-top: 20">
+                        <v-template>
+                            <FlexboxLayout flexDirection="row" class="list-group-item">
+                                <Image src="~/assets/images/brain.png" class="thumb img-circle" />
 
-                            <Label class="fa" :class="{favorite: entity.favorite}" :text="'fa-star' | fonticon" @tap="addToFavorites(entity)" />
-                        </FlexboxLayout>
-                    </v-template>
-                </ListView>
+                                <StackLayout style="width: 60%">
+                                    <Label class="block" :text="entity.gsx$nombre.$t"  textWrap="true"   />
+                                    <Label class="inline" :text="'Industria: '+entity.gsx$industria.$t"  textWrap="true" />
+                                    <Label class="inline" :text="'Ubicación: '+entity.gsx$país.$t"  textWrap="true" />
+                                </StackLayout>
+
+                                <StackLayout style="float: right;">
+                                    <Label class="fa" :class="{favorite: entity.favorite}" :text="'fa-star' | fonticon" @tap="addToFavorites(entity)" />
+                                </StackLayout>
+                            </FlexboxLayout>
+                        </v-template>
+                    </ListView>
+                <!--</Frame>-->
+
             </StackLayout>
         </RadSideDrawer>
 
@@ -164,5 +170,22 @@
         padding: 10 10 10 10;
         /*background-color: #53ba82;*/
         color: #333;
+    }
+
+    .ripple {
+        background-position: center;
+        transition: background 0.8s;
+    }
+    .ripple:hover {
+        background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%) center/15000%;
+    }
+    .ripple:active {
+        background-color: #6eb9f7;
+        background-size: 100%;
+        transition: background 0s;
+    }
+
+    .fa {
+        font-size: 25;
     }
 </style>
